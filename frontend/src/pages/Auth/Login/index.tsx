@@ -4,6 +4,8 @@ import * as yup from "yup";
 import { emailRegex } from "../constants";
 import { AiFillExclamationCircle, AiOutlineDown } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import { login } from "../../../services/Auth";
+import useAuthStore from "../../../store/auth.store";
 
 const validationSchema = yup.object({
     email: yup
@@ -15,6 +17,19 @@ const validationSchema = yup.object({
 });
 
 const Login = () => {
+    const authStore = useAuthStore();
+    const tryLogin = async (values: { email: string; password: string }) => {
+        console.log(values);
+        const response = await login(values);
+        if (response.status == 200) {
+            const authToken = response.data?.auth;
+            authStore.setToken(authToken);
+            console.log("login success");
+        } else {
+            console.log("error accured");
+        }
+    };
+
     const formik = useFormik({
         initialValues: {
             email: "",
@@ -24,7 +39,7 @@ const Login = () => {
         validateOnChange: true,
         validateOnBlur: true,
         validateOnMount: true,
-        onSubmit: () => {},
+        onSubmit: tryLogin,
     });
 
     return (
@@ -53,6 +68,31 @@ const Login = () => {
                         onSubmit={formik.handleSubmit}
                     >
                         <div className="form-group mb-3 w-full">
+                            <p className="font-bold text-white"> Email </p>
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="Email"
+                                className={twMerge(
+                                    "appearance-none my-2 px-2 py-4 border-[1px] text-white border-neutral-500 focus:border-[2px] focus:border-white focus:outline-none h-12 w-full rounded-md bg-night form-control",
+                                    formik.touched.password &&
+                                        formik.errors.password
+                                        ? "border-red-600 focus:border-red-600"
+                                        : ""
+                                )}
+                                value={formik.values.email}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                            />
+                            {formik.touched.email && formik.errors.email ? (
+                                <div className="text-red-600 inline-flex gap-1 items-center">
+                                    <AiFillExclamationCircle size={16} />{" "}
+                                    {formik.errors.email}
+                                </div>
+                            ) : null}
+                        </div>
+                        <div className="form-group mb-3 w-full">
                             <p className="font-bold text-white"> Password </p>
                             <input
                                 type="password"
@@ -78,35 +118,10 @@ const Login = () => {
                                     </div>
                                 )}
                         </div>
-                        <div className="form-group mb-3 w-full">
-                            <p className="font-bold text-white"> Email </p>
-                            <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                placeholder="Email"
-                                className={twMerge(
-                                    "appearance-none my-2 px-2 py-4 border-[1px] text-white border-neutral-500 focus:border-[2px] focus:border-white focus:outline-none h-12 w-full rounded-md bg-night form-control",
-                                    formik.touched.password &&
-                                        formik.errors.password
-                                        ? "border-red-600 focus:border-red-600"
-                                        : ""
-                                )}
-                                value={formik.values.email}
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                            />
-                            {formik.touched.email && formik.errors.email ? (
-                                <div className="text-red-600 inline-flex gap-1 items-center">
-                                    <AiFillExclamationCircle size={16} />{" "}
-                                    {formik.errors.email}
-                                </div>
-                            ) : null}
-                        </div>
                         <div className="flex justify-center items-center w-full">
                             <button
                                 type="submit"
-                                className="px-9 py-4 text-lg font-bold rounded-full bg-malachite w-full"
+                                className="px-9 py-4 mt-3 text-lg font-bold rounded-full bg-malachite w-full"
                             >
                                 Log In
                             </button>
@@ -116,7 +131,7 @@ const Login = () => {
                     <div className="inline-flex gap-1">
                         <p className="text-silver">Don't have an account? </p>
                         <Link
-                            className="text-white hover:text-malachite"
+                            className="text-white hover:text-malachite underline"
                             to="../auth/signup"
                         >
                             {" "}
