@@ -12,14 +12,14 @@ function SideBar() {
                     icon={GoHome}
                     iconFill={GoHomeFill}
                     isActive={true}
-                    href="/search"
+                    href="/home"
                 />
                 <SideBarButton
                     label={"Search"}
                     icon={RiSearchLine}
                     iconFill={RiSearchFill}
                     isActive={false}
-                    href="/home"
+                    href="/search"
                 />
             </div>
             <div className="bg-night p-2 w-full flex-grow overflow-x-auto rounded-lg">
