@@ -1,6 +1,10 @@
 import { create } from "zustand";
-import { Token } from "./types";
 import { persist } from "zustand/middleware";
+
+export interface Token {
+    access: string;
+    refresh: string;
+}
 
 interface Store {
     token: Token | null;
