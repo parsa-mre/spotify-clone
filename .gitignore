@@ -1,0 +1,5 @@
+data
+volumes/*
+.devcontainer
+.env.dev
+secrets/*

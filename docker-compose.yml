@@ -1,0 +1,78 @@
+version: "3.8"
+
+services:
+    nginx:
+        build: ./nginx
+        ports:
+            - 1337:80
+        volumes:
+            - ./volumes/storage/static_volume/:/home/appuser/backend/staticfiles
+            - ./volumes/storage/media_volume/:/home/appuser/backend/mediafiles
+        depends_on:
+            - api
+            - web
+
+    api:
+        build: ./backend
+        command: python manage.py runserver 0.0.0.0:8000
+        # command: gunicorn core.wsgi:application --bind 0.0.0.0:8000
+        volumes:
+            - ./backend/:/home/appuser/backend
+            - ./volumes/storage/static_volume/:/home/appuser/backend/staticfiles
+            - ./volumes/storage/media_volume/:/home/appuser/backend/mediafiles
+        expose:
+            - 8000
+        env_file:
+            - ./.env.dev
+        depends_on:
+            - db
+
+    web:
+        build: ./frontend
+        command: npm run dev
+        volumes:
+            - ./frontend/:/opt/frontend/
+            - /opt/frontend/node_modules/
+        ports:
+            - 5173:5173
+        expose:
+            - 5173
+        env_file:
+            - ./.env.dev
+        depends_on:
+            - db
+
+    celery:
+        build: ./backend
+        command: celery --app=core worker --loglevel=info
+        volumes:
+            - ./backend/:/home/appuser/backend
+            - ./volumes/storage/static_volume/:/home/appuser/backend/staticfiles
+            - ./volumes/storage/media_volume/:/home/appuser/backend/mediafiles
+        env_file:
+            - ./.env.dev
+        depends_on:
+            - api
+            - redis
+
+    db:
+        image: postgres:15
+        volumes:
+            - ./volumes/postgres_data/:/var/lib/postgresql/data/
+        ports:
+            - 5431:5432
+        expose:
+            - 5432
+        environment:
+            - POSTGRES_USER=u_main
+            - POSTGRES_PASSWORD_FILE=/run/secrets/postgres_db_password
+            - POSTGRES_DB=spotify_db
+        secrets:
+            - postgres_db_password
+
+    redis:
+        image: redis:7-alpine
+
+secrets:
+    postgres_db_password:
+        file: ./secrets/postgress_db_password
