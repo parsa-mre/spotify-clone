@@ -1,7 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
 import { SignUp, Login } from "./pages/Auth";
-import { HomePage, ArtistPage, SearchPage } from "./pages/MainSection";
+import {
+    HomePage,
+    ArtistPage,
+    SearchPage,
+    AlbumPlaylistPage,
+} from "./pages/MainSection";
 
 const router = createBrowserRouter([
     {
@@ -17,8 +22,12 @@ const router = createBrowserRouter([
                 element: <SearchPage />,
             },
             {
-                path: "artist/:id",
+                path: "artists/:id",
                 element: <ArtistPage />,
+            },
+            {
+                path: "albums/:id",
+                element: <AlbumPlaylistPage />,
             },
         ],
     },

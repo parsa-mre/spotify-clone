@@ -1,15 +1,21 @@
 import React from "react";
 import TopBar from "../components/TopBar";
 import SmallCard from "../components/SmallCard";
+import BigCard from "../components/BigCard";
+import SmallCardContainer from "../components/SmallCardContainer";
+import BigCardContainer from "../components/BigCardContainer";
 
 function HomePage() {
     return (
-        <div className="h-full w-full bg-night flex-1 flex-grow rounded-lg">
+        <div className="h-[100vh] w-full bg-night flex-col rounded-lg overflow-x-auto">
             <TopBar />
-            <SmallCard
-                label="mint rjfnr ergl e erlgkerejr gergj"
-                image="https://i.scdn.co/image/ab67706f00000002c084102a056a6619474fbfc1"
-            />
+            <SmallCardContainer />
+            <BigCardContainer />
+            <SmallCardContainer />
+            <SmallCardContainer />
+            <SmallCardContainer />
+            <SmallCardContainer />
+            <SmallCardContainer />
         </div>
     );
 }

@@ -1,12 +1,11 @@
 import React from "react";
-import { HiPlay, HiPause } from "react-icons/hi2";
-import { NowPlayingStore } from "../../../../store/nowplaying.store";
+import PlayPauseButton from "../PlayPauseButton";
 
 interface SmallCardProps {
     label: string;
     image: string;
     contentType: string;
-    contentID: BigInt;
+    contentID: number;
     onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
@@ -18,33 +17,10 @@ const SmallCard: React.FC<SmallCardProps> = ({
     onClick,
 }) => {
     const HEIGHT = "58px";
-    const nowPlayingStore = NowPlayingStore();
-
-    const PlayPauseButton = () => {
-        if (
-            nowPlayingStore.trackID &&
-            ((contentType == "album" && contentID == nowPlayingStore.albumID) ||
-                (contentType == "playlist" &&
-                    contentID == nowPlayingStore.playlistID) ||
-                (contentType == "artist" &&
-                    contentID == nowPlayingStore.artistID))
-        ) {
-            return (
-                <button className="bg-malachite p-2 rounded-full">
-                    <HiPause size={18} />
-                </button>
-            );
-        }
-        return (
-            <button className="bg-malachite p-2 rounded-full hidden group-hover:block duration-300">
-                <HiPlay size={18} />
-            </button>
-        );
-    };
 
     return (
         <div
-            className={`h-[${HEIGHT}] bg-eerie hover:bg-neutral-700 inline-flex gap-3 w-full rounded-sm items-center justify-between duration-300 group cursor-pointer`}
+            className={`h-[${HEIGHT}] bg-eerie hover:bg-neutral-700 inline-flex gap-3 w-full rounded-md items-center justify-between duration-150 group cursor-pointer`}
         >
             <div className="inline-flex gap-3 w-full items-center">
                 <img
@@ -58,7 +34,13 @@ const SmallCard: React.FC<SmallCardProps> = ({
                     {label}
                 </p>
             </div>
-            <div className="p-2">{PlayPauseButton()}</div>
+            <div className="p-2">
+                <PlayPauseButton
+                    contentID={contentID}
+                    contentType={contentType}
+                    style="group-hover:opacity-100 duration-150"
+                />
+            </div>
         </div>
     );
 };

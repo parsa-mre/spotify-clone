@@ -1,15 +1,15 @@
 import { create } from "zustand";
 
 interface User {
-    trackID: BigInt | null;
-    albumID: BigInt | null;
-    playlistID: BigInt | null;
-    artistID: BigInt | null;
+    trackID: number | null;
+    albumID: number | null;
+    playlistID: number | null;
+    artistID: number | null;
     setNowPlaying: (trackData: {
-        trackID: BigInt | null;
-        albumID: BigInt | null;
-        playlistID: BigInt | null;
-        artistID: BigInt | null;
+        trackID: number | null;
+        albumID: number | null;
+        playlistID: number | null;
+        artistID: number | null;
     }) => void;
 }
 

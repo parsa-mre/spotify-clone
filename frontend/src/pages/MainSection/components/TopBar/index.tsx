@@ -17,8 +17,8 @@ const TopBar = () => {
     const currentUser = useCurrentUserStore();
 
     return (
-        <div className="w-full h-[50px] px-5 py-4 rounded-t-md bg-gray-600 flex items-center justify-between">
-            <div className=" inline-flex gap-2">
+        <div className="w-full h-[50px] px-5 py-4 rounded-t-md bg-gray-600 flex items-center justify-between sticky top-0 z-50">
+            <div className="inline-flex gap-2">
                 <button
                     onClick={() => {
                         navigate(-1);
