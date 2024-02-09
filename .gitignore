@@ -3,3 +3,4 @@ volumes/*
 .devcontainer
 .env.dev
 secrets/*
+.DS_Store
