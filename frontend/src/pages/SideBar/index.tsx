@@ -5,7 +5,7 @@ import LibraryBar from "./components/LibraryBar";
 
 function SideBar() {
     return (
-        <div className="flex flex-col gap-2 bg-blue h-full w-[16rem]">
+        <div className="flex flex-col gap-2 bg-blue h-full min-w-[16rem]">
             <div className="bg-night w-full flex-grow-0 rounded-lg p-2">
                 <SideBarButton
                     label={"Home"}

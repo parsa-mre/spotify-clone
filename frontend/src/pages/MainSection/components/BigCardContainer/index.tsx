@@ -50,7 +50,7 @@ const BigCardContainer = () => {
         },
     ];
     return (
-        <div className="p-4 w-full">
+        <div className="p-4 overflow-auto">
             <div className="flex content-between justify-between items-center mb-4">
                 <p className="text-white text-2xl font-bold">
                     Today's Big Hits
@@ -60,7 +60,7 @@ const BigCardContainer = () => {
                 </button>
             </div>
 
-            <div className="flex flex-nowrap gap-3">
+            <div className="flex flex-nowrap gap-3 w-full overflow-auto">
                 {data.map((cardInfo, idx) => (
                     <BigCard
                         image={cardInfo.image}

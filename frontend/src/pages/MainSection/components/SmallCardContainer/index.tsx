@@ -50,9 +50,24 @@ const SmallCardContainer = () => {
             contentID: 21145,
         },
     ];
+
+    const getGreeting = () => {
+        const date = new Date();
+        const hours = date.getHours();
+        if (hours < 12) {
+            return "Good Morning";
+        } else if (hours < 18) {
+            return "Good Afternoon";
+        } else {
+            return "Good Evening";
+        }
+    };
+
     return (
         <div className="p-4">
-            <p className="text-white text-2xl font-bold mb-4">Good Afternoon</p>
+            <p className="text-white text-2xl font-bold mb-4">
+                {getGreeting()}
+            </p>
             <div className="grid gap-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                 {data.map((cardInfo, idx) => (
                     <SmallCard
