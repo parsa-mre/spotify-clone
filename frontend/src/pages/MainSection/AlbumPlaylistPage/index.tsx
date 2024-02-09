@@ -9,6 +9,7 @@ import PlayPauseButton from "../components/PlayPauseButton";
 import { PiShuffle } from "react-icons/pi";
 import { HiOutlineHeart, HiHeart } from "react-icons/hi";
 import { IoArrowDownCircleOutline } from "react-icons/io5";
+import SongList from "../components/SongList";
 
 function AlbumPlaylistPage() {
     const { id: contentID } = useParams();
@@ -29,6 +30,49 @@ function AlbumPlaylistPage() {
         error: artistError,
         isLoading: artistIsLoading,
     } = useArtist(Number(album?.artist));
+
+    const PlaylistHeader = () => {
+        return (
+            <div className="bg-gray-800 text-white p-4 sticky top-0 z-10">
+                <div className="grid grid-cols-5">
+                    <div className="col-span-1">#</div>
+                    <div className="col-span-3">Title</div>
+                    <div className="col-span-1">Plays</div>
+                    <div className="col-span-1">Duration</div>
+                </div>
+            </div>
+        );
+    };
+
+    const PlaylistItem = ({ number, title, plays, duration }) => {
+        return (
+            <div className="grid grid-cols-6 p-4 border-b">
+                <div className="col-span-1">{number}</div>
+                <div className="col-span-3">{title}</div>
+                <div className="col-span-1">{plays}</div>
+                <div className="col-span-1">{duration}</div>
+            </div>
+        );
+    };
+
+    const playlistData = [
+        { number: 1, title: "Song 1", plays: 100, duration: "3:30" },
+        { number: 2, title: "Song 2", plays: 150, duration: "4:15" },
+        { number: 3, title: "Song 2", plays: 150, duration: "4:15" },
+        { number: 4, title: "Song 2", plays: 150, duration: "4:15" },
+        { number: 5, title: "Song 2", plays: 150, duration: "4:15" },
+        { number: 6, title: "Song 2", plays: 150, duration: "4:15" },
+        { number: 7, title: "Song 2", plays: 150, duration: "4:15" },
+        { number: 8, title: "Song 2", plays: 150, duration: "4:15" },
+        { number: 9, title: "Song 2", plays: 150, duration: "4:15" },
+        { number: 10, title: "Song 2", plays: 150, duration: "4:15" },
+        { number: 11, title: "Song 2", plays: 150, duration: "4:15" },
+        { number: 12, title: "Song 2", plays: 150, duration: "4:15" },
+        { number: 13, title: "Song 2", plays: 150, duration: "4:15" },
+        { number: 14, title: "Song 2", plays: 150, duration: "4:15" },
+        { number: 15, title: "Song 2", plays: 150, duration: "4:15" },
+        // Add more songs as needed
+    ];
 
     return (
         <div className="h-[100vh] w-full bg-night flex-col rounded-lg overflow-x-auto">
@@ -59,7 +103,6 @@ function AlbumPlaylistPage() {
                         <p className="text-sm text-white">
                             {tracks && tracks?.length}{" "}
                             {tracks && tracks?.length > 1 ? "songs" : "song"}
-                            {","}
                         </p>
                     </div>
                 </div>
@@ -76,7 +119,9 @@ function AlbumPlaylistPage() {
                 <HiOutlineHeart className="text-silver" size={27} />
                 <IoArrowDownCircleOutline className="text-silver" size={27} />
             </div>
-            <div></div>
+            <div>
+                <SongList id={Number(contentID)} />
+            </div>
 
             {/* {tracks?.map((track) => <p className="text-white">{track.name}</p>)} */}
         </div>

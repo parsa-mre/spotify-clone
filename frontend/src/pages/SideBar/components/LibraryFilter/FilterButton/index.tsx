@@ -19,7 +19,7 @@ const FilterButton: React.FC<FilterButtonProps> = ({
     return (
         <button
             className={twMerge(
-                "p-1 text-white whitespace-nowrap text-sm font-normal bg-eerie px-3 py-1 rounded-full transition",
+                "p-1 text-white whitespace-nowrap text-sm font-normal bg-eerie px-3 py-1 rounded-full transition-all",
                 activeStyle
             )}
             onClick={onClick}
